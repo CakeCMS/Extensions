@@ -1,0 +1,2 @@
+# Extensions
+CakeCMS Extension plugin
