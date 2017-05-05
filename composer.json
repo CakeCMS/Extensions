@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Community\\": "./src"
+            "Extensions\\": "./src"
         }
     },
     "autoload-dev": {
