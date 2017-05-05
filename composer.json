@@ -1,0 +1,64 @@
+{
+    "name": "cake-cms/extensions",
+    "type": "cakephp-plugin",
+    "description": "CakePHP CMS extensions plugin.",
+    "license": "MIT",
+    "keywords": [
+        "cakephp",
+        "cms cakephp",
+        "cakephp users",
+        "cakephp community"
+    ],
+    "authors": [
+        {
+            "name": "Cheren",
+            "email": "kalistratov.s.m@gmail.com"
+        }
+    ],
+    "require": {
+        "cake-cms/core": "^1.0"
+    },
+    "require-dev": {
+        "jbzoo/phpunit": "^1.10",
+        "psy/psysh": "@stable",
+        "cakephp/bake": "~1.1",
+        "cakephp/plugin-installer": "^0.0.15"
+    },
+    "autoload": {
+        "psr-4": {
+            "Community\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Extensions\\Test\\": "./tests",
+            "Test\\App\\": "./tests/App/src"
+        }
+    },
+    "scripts": {
+        "test": [
+            "@manifest",
+            "@autoload",
+            "@phpunit",
+            "@phpmd",
+            "@phpcs",
+            "@phpcpd",
+            "@phploc"
+        ],
+        "update-all": [
+            "composer self-update --no-interaction",
+            "composer update --no-interaction --optimize-autoloader"
+        ],
+        "manifest": "composer validate --no-interaction",
+        "autoload": "composer dump-autoload --optimize --no-interaction",
+        "phpunit": "php ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml.dist",
+        "phpmd": "php ./vendor/phpmd/phpmd/src/bin/phpmd ./src text ./vendor/jbzoo/misc/phpmd/jbzoo.xml --verbose",
+        "phpcs": "php ./vendor/squizlabs/php_codesniffer/scripts/phpcs ./src --standard=./vendor/jbzoo/misc/phpcs/JBZoo/ruleset.xml --report=full",
+        "phpcpd": "php ./vendor/sebastian/phpcpd/phpcpd ./src --verbose",
+        "phploc": "php ./vendor/phploc/phploc/phploc ./src --verbose",
+        "coveralls": "php ./vendor/satooshi/php-coveralls/bin/coveralls --verbose",
+        "post-autoload-dump": [
+            "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
+        ]
+    }
+}
