@@ -11,24 +11,14 @@
  * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
  * @link      https://github.com/CakeCMS/Extensions".
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @var       \Core\View\AppView $this
+ * @var       string $tabId
+ * @var       \Extensions\Model\Entity\Plugin $plugin
  */
 
-use Core\Nav;
-
-Nav::add('sidebar', 'extensions', [
-    'title' =>__d('extensions', 'Extensions'),
-    'weight'=> 100,
-    'icon' => 'puzzle-piece',
-    'url' => '#',
-    'children' => [
-        'plugins' => [
-            'title' => __d('extensions', 'Plugins'),
-            'weight' => 10,
-            'url' => [
-                'plugin' => 'Extensions',
-                'controller' => 'Plugins',
-                'action' => 'index'
-            ]
-        ]
-    ]
-]);
+$href   = '#' . $tabId;
+$plugin = $this->get('entity');
+?>
+<li class="tab">
+    <?= $this->Html->link(__d($plugin->slug, $title), $href, ['title' => __d($plugin->slug, $title)]) ?>
+</li>

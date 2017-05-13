@@ -12,23 +12,3 @@
  * @link      https://github.com/CakeCMS/Extensions".
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
-
-use Core\Nav;
-
-Nav::add('sidebar', 'extensions', [
-    'title' =>__d('extensions', 'Extensions'),
-    'weight'=> 100,
-    'icon' => 'puzzle-piece',
-    'url' => '#',
-    'children' => [
-        'plugins' => [
-            'title' => __d('extensions', 'Plugins'),
-            'weight' => 10,
-            'url' => [
-                'plugin' => 'Extensions',
-                'controller' => 'Plugins',
-                'action' => 'index'
-            ]
-        ]
-    ]
-]);

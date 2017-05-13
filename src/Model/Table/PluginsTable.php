@@ -15,6 +15,7 @@
 
 namespace Extensions\Model\Table;
 
+use Cake\ORM\Query;
 use Core\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -22,6 +23,7 @@ use Cake\Validation\Validator;
  * Class PluginsTable
  *
  * @package Extensions\Model\Table
+ * @method Query findBySlug($alias)
  */
 class PluginsTable extends Table
 {
@@ -50,11 +52,9 @@ class PluginsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->requirePresence('name')
             ->notEmpty('name', __d('extensions', 'Plugin name could not be empty.'));
 
         $validator
-            ->requirePresence('slug')
             ->notEmpty('slug', __d('extensions', 'Plugin slug could not be empty.'))
             ->add('slug', 'unique', [
                 'message'  => __d('extensions', 'Plugin with this slug already exists.'),

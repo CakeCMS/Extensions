@@ -11,24 +11,9 @@
  * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
  * @link      https://github.com/CakeCMS/Extensions".
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @var       \Core\View\AppView $this
  */
-
-use Core\Nav;
-
-Nav::add('sidebar', 'extensions', [
-    'title' =>__d('extensions', 'Extensions'),
-    'weight'=> 100,
-    'icon' => 'puzzle-piece',
-    'url' => '#',
-    'children' => [
-        'plugins' => [
-            'title' => __d('extensions', 'Plugins'),
-            'weight' => 10,
-            'url' => [
-                'plugin' => 'Extensions',
-                'controller' => 'Plugins',
-                'action' => 'index'
-            ]
-        ]
-    ]
-]);
+?>
+<ul class="tabs">
+    <?= implode(PHP_EOL, $items) ?>
+</ul>

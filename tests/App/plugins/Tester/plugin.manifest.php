@@ -13,22 +13,34 @@
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
-use Core\View\AppView;
-
 return [
     'meta' => [
-        'name'        => 'Extensions',
+        'name'        => 'Tester',
         'author'      => 'Cheren',
         'version'     => '0.0.1',
         'copyright'   => 'CakePHP CMS',
         'license'     => 'MIT',
         'email'       => 'kalistratov.s.m@gmail.com',
         'url'         => 'http://cool-code.ru',
-        'description' => 'Extensions plugin for UnionCMS'
+        'description' => 'Test plugin',
+        'core'        => true
     ],
-    'View.initialize' => function (AppView $view) {
-        if ($view->request->getParam('plugin') === 'Extensions') {
-            $view->loadHelper('Extensions.Extension');
-        }
-    }
+    'params' => [
+        'Messages' => [
+            'msg_account_create_subject' => [
+                'type'    => 'text',
+                'label'   => __d('community', 'Message subject'),
+                'default' => __d('community', 'Account activation')
+            ],
+            'callable' => function () {
+                return 'From callable';
+            },
+            'test' => [
+                'type' => 'select',
+                'options' => function ($view) {
+                    return [1, 2, 7];
+                }
+            ]
+        ]
+    ]
 ];

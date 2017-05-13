@@ -15,6 +15,7 @@
 
 namespace Extensions\Model\Entity;
 
+use Cake\Utility\Inflector;
 use Core\ORM\Entity\Entity;
 
 /**
@@ -28,4 +29,35 @@ use Core\ORM\Entity\Entity;
  */
 class Plugin extends Entity
 {
+
+    /**
+     * Get manifest data by key.
+     *
+     * @param string $key
+     * @return \JBZoo\Data\Data
+     */
+    public function getManifestData($key = 'meta')
+    {
+        return \Core\Plugin::getData($this->getName(), $key);
+    }
+
+    /**
+     * Get manifest meta data.
+     *
+     * @return \JBZoo\Data\Data
+     */
+    public function getMeta()
+    {
+        return $this->getManifestData();
+    }
+
+    /**
+     * Camilize plugin name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return Inflector::camelize($this->slug);
+    }
 }

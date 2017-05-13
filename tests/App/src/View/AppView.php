@@ -13,22 +13,15 @@
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
-use Core\Nav;
+namespace Test\App\View;
 
-Nav::add('sidebar', 'extensions', [
-    'title' =>__d('extensions', 'Extensions'),
-    'weight'=> 100,
-    'icon' => 'puzzle-piece',
-    'url' => '#',
-    'children' => [
-        'plugins' => [
-            'title' => __d('extensions', 'Plugins'),
-            'weight' => 10,
-            'url' => [
-                'plugin' => 'Extensions',
-                'controller' => 'Plugins',
-                'action' => 'index'
-            ]
-        ]
-    ]
-]);
+use Core\View\AppView as CoreAppView;
+
+/**
+ * Class AppView
+ *
+ * @package Test\App\View
+ */
+class AppView extends CoreAppView
+{
+}
