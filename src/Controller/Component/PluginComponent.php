@@ -15,11 +15,11 @@
 
 namespace Extensions\Controller\Component;
 
+use Core\Plugin;
+use JBZoo\Utils\Str;
 use Cake\Utility\Inflector;
 use Core\Controller\Component\AppComponent;
-use Core\Plugin;
 use Extensions\Controller\Admin\PluginsController;
-use JBZoo\Utils\Str;
 
 /**
  * Class PluginComponent

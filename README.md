@@ -1,2 +1,2 @@
-# Extensions
-CakeCMS Extension plugin
+# Extensions plugin for CakePHP CMS [![Build Status](https://travis-ci.org/CakeCMS/Extensions.svg?branch=master)](https://travis-ci.org/CakeCMS/Extensions) [![Coverage Status](https://coveralls.io/repos/github/CakeCMS/Extensions/badge.svg?branch=master)](https://coveralls.io/github/CakeCMS/Extensions?branch=master)
+[![License](https://poser.pugx.org/cake-cms/extensions/license)](https://packagist.org/packages/cake-cms/extensions) [![Latest Stable Version](https://poser.pugx.org/cake-cms/extensions/v/stable)](https://packagist.org/packages/cake-cms/extensions) [![Latest Unstable Version](https://poser.pugx.org/cake-cms/extensions/v/unstable)](https://packagist.org/packages/cake-cms/extensions)
