@@ -16,9 +16,10 @@
 namespace Extensions\Test\TestCase\Controller\Admin;
 
 use Core\Plugin;
-use Core\TestSuite\IntegrationTestCase;
 use JBZoo\Utils\Arr;
 use JBZoo\Utils\Str;
+use Cake\ORM\TableRegistry;
+use Core\TestSuite\IntegrationTestCase;
 
 /**
  * Class PluginsControllerTest
@@ -115,5 +116,50 @@ class PluginsControllerTest extends IntegrationTestCase
             'action'     => 'config',
             Str::low($this->_corePlugin)
         ]);
+    }
+
+    public function testIndexActionSuccessRender()
+    {
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
+        $url = $this->_getUrl([
+            'prefix'     => 'admin',
+            'plugin'     => $this->_corePlugin,
+            'controller' => 'Plugins',
+            'action'     => 'index'
+        ]);
+
+        $this->get($url);
+        $this->assertResponseOk();
+        self::assertSame(__d('extensions', 'The list of available plugins'), $this->_controller->viewVars['page_title']);
+        self::assertInstanceOf('Cake\ORM\ResultSet', $this->_controller->viewVars['plugins']);
+    }
+
+    public function testToggle()
+    {
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $entityId = 1;
+
+        /** @var \Extensions\Model\Table\PluginsTable $table */
+        $table  = TableRegistry::get($this->_corePlugin . '.Plugins');
+        $entity = $table->get($entityId);
+
+        self::assertSame(1, $entity->status);
+
+        $url = $this->_getUrl([
+            'prefix'     => 'admin',
+            'plugin'     => $this->_corePlugin,
+            'controller' => 'Plugins',
+            'action'     => 'toggle',
+            $entityId, 1
+        ]);
+
+        $this->_request['environment']['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $this->get($url);
+
+        $plugin = $this->_controller->Plugins->get($entityId);
+        self::assertSame(0, $plugin->status);
     }
 }

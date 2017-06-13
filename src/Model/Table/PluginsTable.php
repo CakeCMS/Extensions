@@ -24,6 +24,7 @@ use Cake\Validation\Validator;
  *
  * @package Extensions\Model\Table
  * @method Query findBySlug($alias)
+ * @method filterParams(array $query)
  */
 class PluginsTable extends Table
 {
@@ -33,6 +34,7 @@ class PluginsTable extends Table
      *
      * @param array $config
      * @return void
+     * @throws \RuntimeException
      */
     public function initialize(array $config)
     {
@@ -40,7 +42,8 @@ class PluginsTable extends Table
 
         $this
             ->setTable(CMS_TABLE_PLUGINS)
-            ->setPrimaryKey('id');
+            ->setPrimaryKey('id')
+            ->addBehavior('Search.Search');
     }
 
     /**

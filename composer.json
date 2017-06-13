@@ -22,6 +22,7 @@
         "jbzoo/phpunit": "^1.10",
         "psy/psysh": "@stable",
         "cakephp/bake": "~1.1",
+        "friendsofcake/search": "~2.3",
         "cakephp/plugin-installer": "^0.0.15"
     },
     "autoload": {

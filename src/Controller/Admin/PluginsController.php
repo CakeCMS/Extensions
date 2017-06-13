@@ -34,17 +34,6 @@ class PluginsController extends AppController
 {
 
     /**
-     * Initialization hook method.
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-        $this->loadComponent($this->plugin . '.Plugin');
-    }
-
-    /**
      * Config save/update action.
      *
      * @param null|string $alias
@@ -76,5 +65,40 @@ class PluginsController extends AppController
             ->set('plugin', $plugin)
             ->set('entity', $entity)
             ->set('page_title', __d('extensions', 'Configuration plugin «{0}»', __d($alias, $plugin)));
+    }
+
+    /**
+     * Index action.
+     *
+     * @return void
+     * @throws \RuntimeException
+     */
+    public function index()
+    {
+        $query = $this->Plugins->find('search', $this->Plugins->filterParams($this->request->getQueryParams()));
+        $this->set('plugins', $this->paginate($query));
+        $this->set('page_title', __d('extensions', 'The list of available plugins'));
+    }
+
+    /**
+     * Initialization hook method.
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent($this->plugin . '.Plugin');
+    }
+
+    /**
+     * Toggle action.
+     *
+     * @param int $id
+     * @param $status
+     */
+    public function toggle($id, $status)
+    {
+        $this->App->toggleField($this->Plugins, $id, $status);
     }
 }
