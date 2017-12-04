@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Extensions
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Extensions".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @package     Extensions
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Extensions".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
 namespace Extensions\Controller\Admin;
@@ -18,10 +18,12 @@ namespace Extensions\Controller\Admin;
 use JBZoo\Utils\Str;
 use Cake\Core\Plugin;
 use Cake\Utility\Inflector;
+use Core\Migration\Migration;
 use Extensions\Model\Table\PluginsTable;
 use Cake\View\Exception\MissingViewException;
 use Cake\Core\Exception\MissingPluginException;
 use Extensions\Controller\Component\PluginComponent;
+use Cake\ORM\Exception\RolledbackTransactionException;
 
 /**
  * Class PluginsController
@@ -37,8 +39,11 @@ class PluginsController extends AppController
      * Config save/update action.
      *
      * @param null|string $alias
+     * @throws MissingPluginException
+     * @throws MissingViewException
+     * @throws RolledbackTransactionException
+     * @throws \InvalidArgumentException
      * @return \Cake\Http\Response|null
-     * @throws MissingPluginException|MissingViewException
      */
     public function config($alias = null)
     {
@@ -48,10 +53,11 @@ class PluginsController extends AppController
             $entity = $this->Plugin->getEntity($plugin);
             if ($this->request->is(['post', 'put'])) {
                 $entity = $this->Plugins->patchEntity($entity, $this->request->getData());
-                if ($result = $this->Plugins->save($entity)) {
+                $result = $this->Plugins->save($entity);
+                if ($result) {
                     $this->Flash->success(__d('extensions', 'The plugin settings has been saved.'));
                     return $this->App->redirect([
-                        'apply' => ['action' => 'config', $result->get('slug', $alias)]
+                        'apply' => ['action' => 'config', $result->get('slug')]
                     ]);
                 } else {
                     $this->Flash->error(__d('extensions', 'The settings could not be saved. Please, try again.'));
@@ -100,5 +106,24 @@ class PluginsController extends AppController
     public function toggle($id, $status)
     {
         $this->App->toggleField($this->Plugins, $id, $status);
+    }
+
+    public function migrate($plugin = null)
+    {
+        $slug = Str::low($plugin);
+        /** @var \Extensions\Model\Entity\Plugin|null $plugin */
+        $plugin = $this->Plugins->findBySlug($slug)->first();
+
+        if ($plugin !== null && Plugin::loaded($plugin->name)) {
+            $pluginDomainName = sprintf('<strong>%s</strong>', __d($plugin->slug, $plugin->name));
+            $migrations = Migration::getData($plugin->name);
+            if (count($migrations) <= 0) {
+                $this->Flash->error(__d('extensions', 'Not found migration for «{0}»', $pluginDomainName));
+                return $this->redirect(['action' => 'index']);
+            }
+
+            $manager = Migration::getManager($plugin->name);
+            dump($manager->migrateUp());
+        }
     }
 }

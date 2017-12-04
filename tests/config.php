@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Extensions
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Extensions".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @package     Extensions
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Extensions".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
 use Cake\Cache\Cache;
@@ -37,15 +37,15 @@ Configure::write('App', [
     'paths'         => [
         'plugins' => [
             TEST_APP_DIR . 'plugins' . DS,
-            TEST_APP_DIR . 'themes' . DS,
+            TEST_APP_DIR . 'themes' . DS
         ],
         'templates' => [
-            APP . 'Template' . DS,
+            APP . 'Template' . DS
         ],
         'locales' => [
-            APP . 'Locale' . DS,
+            APP . 'Locale' . DS
         ]
-    ],
+    ]
 ]);
 
 Configure::write('EmailTransport', [
@@ -57,7 +57,7 @@ Configure::write('EmailTransport', [
         'username'  => 'user',
         'password'  => 'secret',
         'client'    => null,
-        'tls'       => null,
+        'tls'       => null
     ],
 ]);
 
@@ -66,13 +66,13 @@ Configure::write('Email', [
         'transport'     => 'default',
         'from'          => 'you@localhost',
         'charset'       => 'utf-8',
-        'headerCharset' => 'utf-8',
+        'headerCharset' => 'utf-8'
     ],
 ]);
 
 Configure::write('Theme', [
     'site'  => 'Frontend',
-    'admin' => 'Backend',
+    'admin' => 'Backend'
 ]);
 
 Configure::write('Session', ['defaults' => 'php']);

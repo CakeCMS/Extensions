@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Extensions
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Extensions".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @package     Extensions
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Extensions".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
 namespace Extensions\Test\TestCase\Controller\Admin;
@@ -19,7 +19,7 @@ use Core\Plugin;
 use JBZoo\Utils\Arr;
 use JBZoo\Utils\Str;
 use Cake\ORM\TableRegistry;
-use Core\TestSuite\IntegrationTestCase;
+use Test\Cases\IntegrationTestCase;
 
 /**
  * Class PluginsControllerTest
@@ -75,7 +75,7 @@ class PluginsControllerTest extends IntegrationTestCase
         ]);
 
         $this->post($url, [
-            'action' => 'plugin.apply',
+            'action' => 'apply',
             'name'   => null,
             'slug'   => ''
         ]);

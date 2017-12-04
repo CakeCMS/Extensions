@@ -2,3 +2,4 @@
 vendor
 build
 composer.lock
+config/Migrations/schema-dump-default.lock

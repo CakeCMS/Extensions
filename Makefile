@@ -5,10 +5,10 @@
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
 #
-# @package   Extensions
-# @license   MIT
-# @copyright MIT License http://www.opensource.org/licenses/mit-license.php
-# @link      https://github.com/CakeCMS/Extensions
+# @package    Extensions
+# @license    MIT
+# @copyright  MIT License http://www.opensource.org/licenses/mit-license.php
+# @link       https://github.com/CakeCMS/Extensions
 #
 
 .PHONY: build update test-all autoload test phpmd phpcs phpcpd phploc coveralls
@@ -34,13 +34,14 @@ test-unit:
 
 phpmd:
 	@echo -e "\033[0;33m>>> \033[0;30;46m Check PHPmd \033[0m"
-	@php ./vendor/phpmd/phpmd/src/bin/phpmd ./src text ./vendor/jbzoo/misc/phpmd/jbzoo.xml --verbose
+	@php /vendor/phpmd/phpmd/src/bin/phpmd ./src text codesize, unusedcode, naming
 	@echo ""
 
 phpcs:
-	@echo -e "\033[0;33m>>> \033[0;30;46m Check Code Style \033[0m"
-	@php ./vendor/squizlabs/php_codesniffer/scripts/phpcs ./src   \
-        --standard=./vendor/jbzoo/misc/phpcs/JBZoo/ruleset.xml    \
+	@echo -e "\033[0;33m>>> >>> >>> >>> >>> >>> >>> >>> \033[0;30;46m Check Code Style \033[0m"
+	@php ./vendor/squizlabs/php_codesniffer/bin/phpcs ./src                 \
+        --extensions=php                                                    \
+        --standard=./vendor/cake-cms/test/src/phpcs/CakeCMS/ruleset.xml     \
         --report=full
 	@echo ""
 

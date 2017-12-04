@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Extensions
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Extensions".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @package     Extensions
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Extensions".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
 use Core\Cms;
@@ -20,7 +20,8 @@ use Cake\Routing\DispatcherFactory;
 use Cake\Datasource\ConnectionManager;
 
 //  Composer autoload.
-if ($autoload = realpath('./vendor/autoload.php')) {
+$autoload = realpath('./vendor/autoload.php');
+if ($autoload) {
     /** @noinspection PhpIncludeInspection */
     require_once $autoload;
 } else {
@@ -51,7 +52,7 @@ if (!getenv('db_dsn')) {
 
 ConnectionManager::setConfig('test', [
     'timezone' => 'UTC',
-    'url'      => getenv('db_dsn'),
+    'url'      => getenv('db_dsn')
 ]);
 
 Email::setConfig(Configure::consume('Email'));
