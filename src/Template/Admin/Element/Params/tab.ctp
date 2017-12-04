@@ -13,12 +13,12 @@
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  * @var         \Core\View\AppView $this
  * @var         string $tabId
- * @var         \Extensions\Model\Entity\Plugin $plugin
+ * @var         \Extensions\Model\Entity\Extension $extension
  */
 
 $href   = '#' . $tabId;
-$plugin = $this->get('entity');
+$extension = $this->get('entity');
 ?>
 <li class="tab">
-    <?= $this->Html->link(__d($plugin->slug, $title), $href, ['title' => __d($plugin->slug, $title)]) ?>
+    <?= $this->Html->link(__d($extension->slug, $title), $href, ['title' => __d($extension->slug, $title)]) ?>
 </li>

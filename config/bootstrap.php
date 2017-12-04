@@ -13,6 +13,6 @@
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
-if (!defined('CMS_TABLE_PLUGINS')) {
-    define('CMS_TABLE_PLUGINS', 'plugins');
+if (!defined('CMS_TABLE_EXTENSIONS')) {
+    define('CMS_TABLE_EXTENSIONS', 'extensions');
 }

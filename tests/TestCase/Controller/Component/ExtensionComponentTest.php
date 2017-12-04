@@ -19,22 +19,22 @@ use Test\Cases\TestCase;
 use Cake\Http\ServerRequest;
 use Cake\Controller\ComponentRegistry;
 use Extensions\Controller\Admin\PluginsController;
-use Extensions\Controller\Component\PluginComponent;
+use Extensions\Controller\Component\ExtensionComponent;
 
 /**
  * Class PluginComponentTest
  *
  * @package Extensions\Test\TestCase\Controller\Component
  */
-class PluginComponentTest extends TestCase
+class ExtensionComponentTest extends TestCase
 {
 
-    public $fixtures = ['plugin.extensions.plugins'];
+    public $fixtures = ['plugin.extensions.extensions'];
     protected $_plugin = 'Core';
     protected $_corePlugin = 'Extensions';
 
     /**
-     * @var PluginComponent
+     * @var ExtensionComponent
      */
     protected $_component;
 
@@ -52,7 +52,7 @@ class PluginComponentTest extends TestCase
 
         $controller = new PluginsController($request);
         $registry   = new ComponentRegistry($controller);
-        $this->_component = new PluginComponent($registry);
+        $this->_component = new ExtensionComponent($registry);
     }
 
     public function tearDown()
@@ -64,11 +64,11 @@ class PluginComponentTest extends TestCase
     public function testGetEntity()
     {
         $entity = $this->_component->getEntity('No-Exists');
-        self::assertInstanceOf('Extensions\Model\Entity\Plugin', $entity);
+        self::assertInstanceOf('Extensions\Model\Entity\Extension', $entity);
         self::assertSame('no-exists', $entity->slug);
 
         $entity = $this->_component->getEntity('Community');
-        self::assertInstanceOf('Extensions\Model\Entity\Plugin', $entity);
+        self::assertInstanceOf('Extensions\Model\Entity\Extension', $entity);
         self::assertSame('community', $entity->slug);
         self::assertSame(1, $entity->status);
     }

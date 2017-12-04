@@ -15,11 +15,12 @@
 
 namespace Extensions\Model\Entity;
 
+use Core\Plugin;
 use Cake\Utility\Inflector;
 use Core\ORM\Entity\Entity;
 
 /**
- * Class Plugin
+ * Class Extension
  *
  * @package Extensions\Model\Table
  * @property string $name
@@ -27,7 +28,7 @@ use Core\ORM\Entity\Entity;
  * @property bool $core
  * @property bool $status
  */
-class Plugin extends Entity
+class Extension extends Entity
 {
 
     /**
@@ -38,7 +39,7 @@ class Plugin extends Entity
      */
     public function getManifestData($key = 'meta')
     {
-        return \Core\Plugin::getData($this->getName(), $key);
+        return Plugin::getData($this->getName(), $key);
     }
 
     /**

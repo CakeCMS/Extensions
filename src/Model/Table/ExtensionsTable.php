@@ -18,18 +18,18 @@ namespace Extensions\Model\Table;
 use Cake\ORM\Query;
 use Core\ORM\Table;
 use Cake\Validation\Validator;
-use Extensions\Model\Entity\Plugin;
+use Extensions\Model\Entity\Extension;
 use Cake\Datasource\EntityInterface;
 
 /**
- * Class PluginsTable
+ * Class ExtensionsTable
  *
  * @package Extensions\Model\Table
  * @method Query findBySlug($alias)
  * @method filterParams(array $query)
- * @method Plugin save(EntityInterface $entity, $options = [])
+ * @method Extension save(EntityInterface $entity, $options = [])
  */
-class PluginsTable extends Table
+class ExtensionsTable extends Table
 {
 
     /**
@@ -44,7 +44,7 @@ class PluginsTable extends Table
         parent::initialize($config);
 
         $this
-            ->setTable(CMS_TABLE_PLUGINS)
+            ->setTable(CMS_TABLE_EXTENSIONS)
             ->setPrimaryKey('id')
             ->addBehavior('Search.Search');
     }
@@ -58,12 +58,12 @@ class PluginsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->notEmpty('name', __d('extensions', 'Plugin name could not be empty.'));
+            ->notEmpty('name', __d('extensions', 'Extension name could not be empty.'));
 
         $validator
-            ->notEmpty('slug', __d('extensions', 'Plugin slug could not be empty.'))
+            ->notEmpty('slug', __d('extensions', 'Extension slug could not be empty.'))
             ->add('slug', 'unique', [
-                'message'  => __d('extensions', 'Plugin with this slug already exists.'),
+                'message'  => __d('extensions', 'Extension with this slug already exists.'),
                 'rule'     => 'validateUnique',
                 'provider' => 'table'
             ]);

@@ -16,11 +16,11 @@
 namespace Extensions\Test\TestCase\View\Helper;
 
 use Core\Plugin;
+use Extensions\Model\Entity\Extension;
 use Test\Cases\TestCase;
 use Test\App\View\AppView;
 use Cake\Http\ServerRequest;
 use Extensions\View\Helper\ExtensionHelper;
-use Extensions\Model\Entity\Plugin as PluginEntity;
 
 /**
  * Class ExtensionHelperTest
@@ -49,7 +49,7 @@ class ExtensionHelperTest extends TestCase
         ]);
 
         $view = new AppView($request);
-        $view->set('entity', new PluginEntity([
+        $view->set('entity', new Extension([
             'name' => 'Tester',
             'slug' => 'tester'
         ]));

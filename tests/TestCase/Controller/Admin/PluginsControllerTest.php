@@ -16,6 +16,7 @@
 namespace Extensions\Test\TestCase\Controller\Admin;
 
 use Core\Plugin;
+use Extensions\Controller\Admin\PluginsController;
 use JBZoo\Utils\Arr;
 use JBZoo\Utils\Str;
 use Cake\ORM\TableRegistry;
@@ -25,11 +26,12 @@ use Test\Cases\IntegrationTestCase;
  * Class PluginsControllerTest
  *
  * @package Extensions\Test\TestCase\Controller\Admin
+ * @property PluginsController $_controller
  */
 class PluginsControllerTest extends IntegrationTestCase
 {
 
-    public $fixtures = ['plugin.extensions.plugins'];
+    public $fixtures = ['plugin.extensions.extensions'];
     protected $_corePlugin = 'Extensions';
 
     public function setUp()
@@ -83,7 +85,7 @@ class PluginsControllerTest extends IntegrationTestCase
         $viewVars = $this->_controller->viewVars;
 
         $this->assertResponseContains(__d('extensions', 'The settings could not be saved. Please, try again.'));
-        self::assertInstanceOf('Extensions\Model\Entity\Plugin', $viewVars['entity']);
+        self::assertInstanceOf('Extensions\Model\Entity\Extension', $viewVars['entity']);
         self::assertTrue(Arr::key('page_title', $viewVars));
         self::assertTrue(Arr::key('plugin', $viewVars));
         self::assertSame('Tester', $viewVars['plugin']);
@@ -142,8 +144,8 @@ class PluginsControllerTest extends IntegrationTestCase
         $this->enableSecurityToken();
         $entityId = 1;
 
-        /** @var \Extensions\Model\Table\PluginsTable $table */
-        $table  = TableRegistry::get($this->_corePlugin . '.Plugins');
+        /** @var \Extensions\Model\Table\ExtensionsTable $table */
+        $table  = TableRegistry::get($this->_corePlugin . '.Extensions');
         $entity = $table->get($entityId);
 
         self::assertSame(1, $entity->status);
@@ -159,7 +161,7 @@ class PluginsControllerTest extends IntegrationTestCase
         $this->_request['environment']['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $this->get($url);
 
-        $plugin = $this->_controller->Plugins->get($entityId);
+        $plugin = $this->_controller->Extensions->get($entityId);
         self::assertSame(0, $plugin->status);
     }
 }

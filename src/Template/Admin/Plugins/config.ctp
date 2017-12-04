@@ -11,7 +11,7 @@
  * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
  * @link        https://github.com/CakeCMS/Extensions".
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
- * @var         \Extensions\Model\Entity\Plugin $plugin
+ * @var         \Extensions\Model\Entity\Extension $extension
  * @var         \Core\View\AppView $this
  */
 
@@ -21,10 +21,10 @@ ToolbarHelper::apply();
 ToolbarHelper::save();
 ToolbarHelper::cancel();
 
-$plugin = $this->get('entity');
-$meta   = $plugin->getMeta();
+$extension = $this->get('entity');
+$meta = $extension->getMeta();
 
-echo $this->Form->create($plugin, ['jsForm' => true]);
+echo $this->Form->create($extension, ['jsForm' => true]);
 echo $this->Form->control('id');
 ?>
 <div class="page-header">
@@ -44,7 +44,7 @@ echo $this->Form->control('id');
         ?>
         <ul class="collection with-header">
             <li class="collection-item">
-                <?= __d('extensions', 'Plugin name: {0}', __d($plugin->slug, $meta->get('name'))) ?>
+                <?= __d('extensions', 'Plugin name: {0}', __d($extension->slug, $meta->get('name'))) ?>
             </li>
             <li class="collection-item">
                 <?= __d('extensions', 'Author: {0}', $meta->get('author')) ?>

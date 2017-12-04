@@ -12,6 +12,7 @@
  * @link        https://github.com/CakeCMS/Extensions".
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  * @var         \Core\View\AppView $this
+ * @var         array $items
  */
 ?>
 <ul class="tabs">

@@ -22,11 +22,11 @@ use Core\Controller\Component\AppComponent;
 use Extensions\Controller\Admin\PluginsController;
 
 /**
- * Class PluginComponent
+ * Class ExtensionComponent
  *
  * @package Extensions\Controller\Component
  */
-class PluginComponent extends AppComponent
+class ExtensionComponent extends AppComponent
 {
 
     /**
@@ -46,9 +46,9 @@ class PluginComponent extends AppComponent
     {
         $plugin = Inflector::camelize($plugin);
         $slug   = Str::low($plugin);
-        $entity = $this->_controller->Plugins->findBySlug($slug)->first();
+        $entity = $this->_controller->Extensions->findBySlug($slug)->first();
         if ($entity === null) {
-            $entity = $this->_controller->Plugins->newEntity([
+            $entity = $this->_controller->Extensions->newEntity([
                 'params' => [],
                 'slug'   => $slug,
                 'name'   => $plugin

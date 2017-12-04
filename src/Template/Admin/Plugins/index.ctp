@@ -12,7 +12,7 @@
  * @link        https://github.com/CakeCMS/Extensions".
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  * @var         \Core\View\AppView $this
- * @var         \Extensions\Model\Entity\Plugin $plugin
+ * @var         \Extensions\Model\Entity\Extension $extension
  */
 
 use Core\Plugin;
@@ -35,14 +35,14 @@ $this->Assets->toggleField();
     echo $this->Html->tag('thead', $tHeaders);
 
     $rows = [];
-    foreach ($this->get('plugins') as $plugin) {
-        $editLink = $this->Html->link($plugin->name, ['action' => 'config', $plugin->slug]);
-        $data     = Plugin::getData($plugin->name, 'meta');
+    foreach ($this->get('plugins') as $extension) {
+        $editLink = $this->Html->link($extension->name, ['action' => 'config', $extension->slug]);
+        $data     = Plugin::getData($extension->name, 'meta');
 
         $rows[] = [
-            [$this->Form->processCheck('user', $plugin->id), ['class' => 'center ck-hide-label']],
+            [$this->Form->processCheck('user', $extension->id), ['class' => 'center ck-hide-label']],
             $editLink,
-            [$this->Html->toggle($plugin), ['class' => 'center']],
+            [$this->Html->toggle($extension), ['class' => 'center']],
             [$data->get('version'), ['class' => 'center']],
             [$data->get('author'), ['class' => 'center']]
         ];

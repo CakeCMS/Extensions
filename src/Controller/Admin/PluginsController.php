@@ -15,22 +15,24 @@
 
 namespace Extensions\Controller\Admin;
 
+use Cake\Datasource\Exception\MissingModelException;
 use JBZoo\Utils\Str;
 use Cake\Core\Plugin;
 use Cake\Utility\Inflector;
 use Core\Migration\Migration;
-use Extensions\Model\Table\PluginsTable;
+use Extensions\Model\Entity\Extension;
+use Extensions\Model\Table\ExtensionsTable;
 use Cake\View\Exception\MissingViewException;
 use Cake\Core\Exception\MissingPluginException;
-use Extensions\Controller\Component\PluginComponent;
+use Extensions\Controller\Component\ExtensionComponent;
 use Cake\ORM\Exception\RolledbackTransactionException;
 
 /**
  * Class PluginsController
  *
  * @package Extensions\Controller\Admin
- * @property PluginsTable $Plugins
- * @property PluginComponent $Plugin
+ * @property ExtensionsTable $Extensions
+ * @property ExtensionComponent $Extension
  */
 class PluginsController extends AppController
 {
@@ -50,18 +52,18 @@ class PluginsController extends AppController
         $alias  = Str::low($alias);
         $plugin = Inflector::camelize($alias);
         if (Plugin::loaded($plugin)) {
-            $entity = $this->Plugin->getEntity($plugin);
+            $entity = $this->Extension->getEntity($plugin);
             if ($this->request->is(['post', 'put'])) {
-                $entity = $this->Plugins->patchEntity($entity, $this->request->getData());
-                $result = $this->Plugins->save($entity);
+                $entity = $this->Extensions->patchEntity($entity, $this->request->getData());
+                $result = $this->Extensions->save($entity);
                 if ($result) {
                     $this->Flash->success(__d('extensions', 'The plugin settings has been saved.'));
                     return $this->App->redirect([
                         'apply' => ['action' => 'config', $result->get('slug')]
                     ]);
-                } else {
-                    $this->Flash->error(__d('extensions', 'The settings could not be saved. Please, try again.'));
                 }
+
+                $this->Flash->error(__d('extensions', 'The settings could not be saved. Please, try again.'));
             }
         } else {
             throw new MissingPluginException(['plugin' => $plugin]);
@@ -81,7 +83,7 @@ class PluginsController extends AppController
      */
     public function index()
     {
-        $query = $this->Plugins->find('search', $this->Plugins->filterParams($this->request->getQueryParams()));
+        $query = $this->Extensions->find('search', $this->Extensions->filterParams($this->request->getQueryParams()));
         $this->set('plugins', $this->paginate($query));
         $this->set('page_title', __d('extensions', 'The list of available plugins'));
     }
@@ -89,12 +91,16 @@ class PluginsController extends AppController
     /**
      * Initialization hook method.
      *
+     * @throws MissingModelException
+     * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      * @return void
      */
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent($this->plugin . '.Plugin');
+        $this->loadComponent($this->plugin . '.Extension');
+        $this->loadModel($this->plugin . '.Extensions');
     }
 
     /**
@@ -105,14 +111,14 @@ class PluginsController extends AppController
      */
     public function toggle($id, $status)
     {
-        $this->App->toggleField($this->Plugins, $id, $status);
+        $this->App->toggleField($this->Extensions, $id, $status);
     }
 
     public function migrate($plugin = null)
     {
         $slug = Str::low($plugin);
-        /** @var \Extensions\Model\Entity\Plugin|null $plugin */
-        $plugin = $this->Plugins->findBySlug($slug)->first();
+        /** @var Extension|null $plugin */
+        $plugin = $this->Extensions->findBySlug($slug)->first();
 
         if ($plugin !== null && Plugin::loaded($plugin->name)) {
             $pluginDomainName = sprintf('<strong>%s</strong>', __d($plugin->slug, $plugin->name));

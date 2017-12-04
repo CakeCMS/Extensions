@@ -41,11 +41,11 @@ class Initial extends AbstractMigration
      */
     public function up()
     {
-        $this->table('plugins')
+        $this->table('extensions')
             ->addColumn('id', 'integer', [
+                'limit'         => 11,
                 'autoIncrement' => true,
                 'default'       => null,
-                'limit'         => 11,
                 'null'          => false,
                 'signed'        => false
             ])
@@ -53,29 +53,39 @@ class Initial extends AbstractMigration
                 'id'
             ])
             ->addColumn('name', 'string', [
-                'default'   => null,
-                'limit'     => 150,
-                'null'      => false
+                'limit'   => 150,
+                'default' => null,
+                'null'    => false
+            ])
+            ->addColumn('type', 'string', [
+                'limit'   => 20,
+                'default' => null,
+                'null'    => false
+            ])
+            ->addColumn('ordering', 'integer', [
+                'default' => 0,
+                'limit'   => 11,
+                'null'    => false
             ])
             ->addColumn('slug', 'string', [
-                'default'   => null,
-                'limit'     => 150,
-                'null'      => false
+                'limit'   => 150,
+                'default' => null,
+                'null'    => false
             ])
             ->addColumn('core', 'boolean', [
-                'default'   => false,
-                'limit'     => null,
-                'null'      => false
+                'limit'   => null,
+                'default' => false,
+                'null'    => false
             ])
             ->addColumn('status', 'boolean', [
-                'default'   => false,
-                'limit'     => null,
-                'null'      => false
+                'limit'   => null,
+                'default' => false,
+                'null'    => false
             ])
             ->addColumn('params', 'text', [
-                'default'   => null,
-                'limit'     => null,
-                'null'      => true
+                'default' => null,
+                'limit'   => null,
+                'null'    => true
             ])
             ->create();
     }
@@ -87,6 +97,6 @@ class Initial extends AbstractMigration
      */
     public function down()
     {
-        $this->dropTable('plugins');
+        $this->dropTable('extensions');
     }
 }
