@@ -34,7 +34,7 @@ test-unit:
 
 phpmd:
 	@echo -e "\033[0;33m>>> \033[0;30;46m Check PHPmd \033[0m"
-	@php /vendor/phpmd/phpmd/src/bin/phpmd ./src text codesize, unusedcode, naming
+	@php ./vendor/phpmd/phpmd/src/bin/phpmd ./src text codesize, unusedcode, naming
 	@echo ""
 
 phpcs:
