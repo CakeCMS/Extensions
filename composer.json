@@ -16,7 +16,7 @@
         }
     ],
     "require"      : {
-        "cake-cms/core" : "~1.2"
+        "cake-cms/core" : "@dev"
     },
     "require-dev"  : {
         "cake-cms/test"            : "@dev",

@@ -12,10 +12,11 @@
  * @link        https://github.com/CakeCMS/Extensions".
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  * @var         \Core\View\AppView $this
- * @var         \Extensions\Model\Entity\Extension $extension
+ * @var         \Extensions\Model\Entity\Extension $plugin
  */
 
 use Core\Plugin;
+use JBZoo\Utils\Str;
 use Core\Toolbar\ToolbarHelper;
 
 ToolbarHelper::delete();
@@ -29,22 +30,38 @@ $this->Assets->toggleField();
         $this->Paginator->sort('name'),
         [$this->Paginator->sort('status') => ['class' => 'center']],
         [__d('extensions', 'Version') => ['class' => 'center']],
-        [__d('extensions', 'Author') => ['class' => 'center']]
+        [__d('extensions', 'Author') => ['class' => 'center']],
+        [null => ['width' => '60px']]
     ]);
 
     echo $this->Html->tag('thead', $tHeaders);
 
     $rows = [];
-    foreach ($this->get('plugins') as $extension) {
-        $editLink = $this->Html->link($extension->name, ['action' => 'config', $extension->slug]);
-        $data     = Plugin::getData($extension->name, 'meta');
+    foreach ($this->get('plugins') as $plugin) {
+        $editLink  = $this->Html->link($plugin->name, ['action' => 'config', $plugin->slug]);
+        $data      = Plugin::getData($plugin->name, 'meta');
+
+        $migrationLink = null;
+        $hasMigration  = Plugin::hasMigration($plugin->name);
+        if ($hasMigration) {
+            $migrationLink = $this->Html->link(null, [
+                'controller' => 'plugins',
+                'action'     => 'migrate',
+                Str::low($plugin->name)
+            ], [
+                'icon'    => 'retweet',
+                'class'   => 'btn btn-floating pulse',
+                'tooltip' => __d('extensions', 'Plugin has new migrations')
+            ]);
+        }
 
         $rows[] = [
-            [$this->Form->processCheck('user', $extension->id), ['class' => 'center ck-hide-label']],
+            [$this->Form->processCheck('user', $plugin->id), ['class' => 'center ck-hide-label']],
             $editLink,
-            [$this->Html->toggle($extension), ['class' => 'center']],
+            [$this->Html->toggle($plugin), ['class' => 'center']],
             [$data->get('version'), ['class' => 'center']],
-            [$data->get('author'), ['class' => 'center']]
+            [$data->get('author'), ['class' => 'center']],
+            [$migrationLink, ['class' => 'center']]
         ];
     }
     echo $this->Html->tableCells($rows);

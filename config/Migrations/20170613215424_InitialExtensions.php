@@ -16,9 +16,9 @@
 use Migrations\AbstractMigration;
 
 /**
- * Class Initial
+ * Class InitialExtensions
  */
-class Initial extends AbstractMigration
+class InitialExtensions extends AbstractMigration
 {
 
     /**

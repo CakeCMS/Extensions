@@ -19,8 +19,8 @@ use Core\Plugin;
 use JBZoo\Data\Data;
 use JBZoo\Utils\Str;
 use Core\View\Helper\AppHelper;
+use Extensions\Model\Entity\Extension;
 use Cake\View\Exception\MissingElementException;
-use Extensions\Model\Entity\Plugin as PluginEntity;
 
 /**
  * Class ExtensionHelper
@@ -38,7 +38,7 @@ class ExtensionHelper extends AppHelper
      */
     public function renderPluginParams()
     {
-        /** @var PluginEntity $entity */
+        /** @var Extension $entity */
         $tabNav     = [];
         $tabContent = [];
         $entity     = $this->_View->get('entity');
