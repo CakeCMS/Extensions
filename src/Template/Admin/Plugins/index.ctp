@@ -26,12 +26,12 @@ $this->Assets->toggleField();
 <table class="ckTableProcess striped highlight responsive-table jsProcessTable jsToggleField">
     <?php
     $tHeaders = $this->Html->tableHeaders([
-        [$this->Form->checkAll() => ['class' => 'center ck-hide-label']],
-        $this->Paginator->sort('name'),
-        [$this->Paginator->sort('status') => ['class' => 'center']],
+        [$this->Form->checkAll() => ['class' => 'center ck-hide-label', 'width' => '60px']],
+        [$this->Paginator->sort('name') => ['width' => '70%']],
+        ['' => ['width' => '60px']],
+        [$this->Paginator->sort('status') => ['class' => 'center', 'width' => '60px']],
         [__d('extensions', 'Version') => ['class' => 'center']],
-        [__d('extensions', 'Author') => ['class' => 'center']],
-        [null => ['width' => '60px']]
+        [__d('extensions', 'Author') => ['class' => 'center']]
     ]);
 
     echo $this->Html->tag('thead', $tHeaders);
@@ -58,10 +58,10 @@ $this->Assets->toggleField();
         $rows[] = [
             [$this->Form->processCheck('user', $plugin->id), ['class' => 'center ck-hide-label']],
             $editLink,
+            [$migrationLink, ['class' => 'center']],
             [$this->Html->toggle($plugin), ['class' => 'center']],
             [$data->get('version'), ['class' => 'center']],
-            [$data->get('author'), ['class' => 'center']],
-            [$migrationLink, ['class' => 'center']]
+            [$data->get('author'), ['class' => 'center']]
         ];
     }
     echo $this->Html->tableCells($rows);
