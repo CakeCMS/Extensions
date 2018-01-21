@@ -43,10 +43,10 @@ class PluginsController extends AppController
      * @param null|string $alias
      * @return \Cake\Http\Response|null
      *
-     * @throws MissingPluginException
      * @throws MissingViewException
-     * @throws RolledbackTransactionException
+     * @throws MissingPluginException
      * @throws \InvalidArgumentException
+     * @throws RolledbackTransactionException
      */
     public function config($alias = null)
     {
@@ -123,10 +123,9 @@ class PluginsController extends AppController
         /** @var Extension $plugin */
         $plugin = $this->Extensions->findBySlug($slug)->first();
 
-        $migration = new Migration($plugin->name);
         $redirectAction = ['action' => 'index'];
-
         if ($plugin !== null && Plugin::loaded($plugin->name)) {
+            $migration  = new Migration($plugin->name);
             $migrations = $migration->getData();
             $pluginDomainName = sprintf('<strong>%s</strong>', __d($plugin->slug, $plugin->name));
 
@@ -161,6 +160,8 @@ class PluginsController extends AppController
      *
      * @param int $id
      * @param $status
+     *
+     * @return void
      */
     public function toggle($id, $status)
     {
