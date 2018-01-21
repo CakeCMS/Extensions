@@ -152,7 +152,7 @@ class PluginsController extends AppController
             }
         }
 
-        $this->Flash->error(__d('extensions', 'Not found «{0}» plugin', $plugin));
+        $this->Flash->error(__d('extensions', 'Not found «{0}» plugin', $pluginName));
         return $this->redirect($redirectAction);
     }
 
