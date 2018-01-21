@@ -16,11 +16,11 @@
 namespace Extensions\Test\TestCase\Controller\Admin;
 
 use Core\Plugin;
-use Extensions\Controller\Admin\PluginsController;
 use JBZoo\Utils\Arr;
 use JBZoo\Utils\Str;
 use Cake\ORM\TableRegistry;
 use Test\Cases\IntegrationTestCase;
+use Extensions\Controller\Admin\PluginsController;
 
 /**
  * Class PluginsControllerTest
@@ -31,18 +31,24 @@ use Test\Cases\IntegrationTestCase;
 class PluginsControllerTest extends IntegrationTestCase
 {
 
-    public $fixtures = ['plugin.extensions.extensions'];
+    public $fixtures = [
+        'plugin.extensions.extensions'
+    ];
     protected $_corePlugin = 'Extensions';
 
     public function setUp()
     {
         parent::setUp();
+
+        Plugin::load('Clean', ['autoload' => true]);
         Plugin::load('Tester', ['autoload' => true]);
     }
 
     public function tearDown()
     {
         parent::tearDown();
+
+        Plugin::unload('Clean');
         Plugin::unload('Tester');
     }
 
@@ -127,13 +133,89 @@ class PluginsControllerTest extends IntegrationTestCase
 
         $this->get([
             'prefix'     => 'admin',
-            'plugin'     => $this->_corePlugin,
+            'action'     => 'index',
             'controller' => 'Plugins',
-            'action'     => 'index'
+            'plugin'     => $this->_corePlugin
         ]);
 
-       //self::assertSame(__d('extensions', 'The list of available plugins'), $this->_controller->viewVars['page_title']);
-       //self::assertInstanceOf('Cake\ORM\ResultSet', $this->_controller->viewVars['plugins']);
+       self::assertSame(__d('extensions', 'The list of available plugins'), $this->_controller->viewVars['page_title']);
+       self::assertInstanceOf('Cake\ORM\ResultSet', $this->_controller->viewVars['plugins']);
+    }
+
+    public function testMigrateNoPlugin()
+    {
+        $this->get([
+            'prefix'     => 'admin',
+            'controller' => 'Plugins',
+            'action'     => 'migrate',
+            'plugin'     => $this->_corePlugin,
+            'noExist'
+        ]);
+
+        $this->assertRedirect([
+            'prefix'     => 'admin',
+            'controller' => 'Plugins',
+            'action'     => 'index',
+            'plugin'     => $this->_corePlugin
+        ]);
+    }
+
+    public function testMigrationFailNotFoundMigrations()
+    {
+        $this->get([
+            'prefix'     => 'admin',
+            'controller' => 'Plugins',
+            'action'     => 'migrate',
+            'plugin'     => $this->_corePlugin,
+            'Clean'
+        ]);
+
+        $session = $this->_controller->request->getSession()->read('Flash.flash');
+
+        $this->assertRedirect([
+            'prefix'     => 'admin',
+            'controller' => 'Plugins',
+            'action'     => 'index',
+            'plugin'     => $this->_corePlugin
+        ]);
+
+        self::assertSame([[
+            'message'   => 'Not found migration for «<strong>Clean</strong>»',
+            'key'       => 'flash',
+            'element'   => 'Flash/error',
+            'params'    => []
+        ]], $session);
+    }
+
+    public function testMigrationSuccess()
+    {
+        Plugin::load('TestPlugin', ['autoload' => true]);
+
+        $this->get([
+            'prefix'     => 'admin',
+            'controller' => 'Plugins',
+            'action'     => 'migrate',
+            'plugin'     => $this->_corePlugin,
+            'TestPlugin'
+        ]);
+
+        $session = $this->_controller->request->getSession()->read('Flash.flash');
+
+        $this->assertRedirect([
+            'prefix'     => 'admin',
+            'controller' => 'Plugins',
+            'action'     => 'index',
+            'plugin'     => $this->_corePlugin
+        ]);
+
+        self::assertSame([[
+            'message'   => 'The version «<strong>20170613211616</strong>» of plugin «<strong>TestPlugin</strong>» has bin success migrated.',
+            'key'       => 'flash',
+            'element'   => 'Flash/success',
+            'params'    => []
+        ]], $session);
+
+        Plugin::unload('TestPlugin');
     }
 
     public function testToggle()

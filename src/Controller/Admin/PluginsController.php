@@ -15,15 +15,15 @@
 
 namespace Extensions\Controller\Admin;
 
-use Cake\Datasource\Exception\MissingModelException;
 use JBZoo\Utils\Str;
 use Cake\Core\Plugin;
 use Cake\Utility\Inflector;
-use Core\Migration\Migration;
+use Extensions\Migration\Migration;
 use Extensions\Model\Entity\Extension;
 use Extensions\Model\Table\ExtensionsTable;
 use Cake\View\Exception\MissingViewException;
 use Cake\Core\Exception\MissingPluginException;
+use Cake\Datasource\Exception\MissingModelException;
 use Extensions\Controller\Component\ExtensionComponent;
 use Cake\ORM\Exception\RolledbackTransactionException;
 
@@ -31,8 +31,8 @@ use Cake\ORM\Exception\RolledbackTransactionException;
  * Class PluginsController
  *
  * @package Extensions\Controller\Admin
- * @property ExtensionsTable $Extensions
  * @property ExtensionComponent $Extension
+ * @property ExtensionsTable $Extensions
  */
 class PluginsController extends AppController
 {
@@ -41,11 +41,12 @@ class PluginsController extends AppController
      * Config save/update action.
      *
      * @param null|string $alias
+     * @return \Cake\Http\Response|null
+     *
      * @throws MissingPluginException
      * @throws MissingViewException
      * @throws RolledbackTransactionException
      * @throws \InvalidArgumentException
-     * @return \Cake\Http\Response|null
      */
     public function config($alias = null)
     {
@@ -79,28 +80,80 @@ class PluginsController extends AppController
      * Index action.
      *
      * @return void
+     *
      * @throws \RuntimeException
      */
     public function index()
     {
         $query = $this->Extensions->find('search', $this->Extensions->filterParams($this->request->getQueryParams()));
-        $this->set('plugins', $this->paginate($query));
-        $this->set('page_title', __d('extensions', 'The list of available plugins'));
+
+        $this
+            ->set('plugins', $this->paginate($query))
+            ->set('page_title', __d('extensions', 'The list of available plugins'));
     }
 
     /**
      * Initialization hook method.
      *
+     * @return void
+     *
      * @throws MissingModelException
      * @throws \InvalidArgumentException
      * @throws \UnexpectedValueException
-     * @return void
      */
     public function initialize()
     {
         parent::initialize();
         $this->loadComponent($this->plugin . '.Extension');
         $this->loadModel($this->plugin . '.Extensions');
+    }
+
+    /**
+     * Migrate plugin action.
+     *
+     * @param string|null $pluginName
+     * @return \Cake\Http\Response|null
+     *
+     * @throws \InvalidArgumentException
+     * @throws \Cake\Core\Exception\MissingPluginException
+     */
+    public function migrate($pluginName = null)
+    {
+        $slug = Inflector::underscore($pluginName);
+        /** @var Extension $plugin */
+        $plugin = $this->Extensions->findBySlug($slug)->first();
+
+        $migration = new Migration($plugin->name);
+        $redirectAction = ['action' => 'index'];
+
+        if ($plugin !== null && Plugin::loaded($plugin->name)) {
+            $migrations = $migration->getData();
+            $pluginDomainName = sprintf('<strong>%s</strong>', __d($plugin->slug, $plugin->name));
+
+            if (count($migrations) <= 0) {
+                $this->Flash->error(__d('extensions', 'Not found migration for «{0}»', $pluginDomainName));
+                return $this->redirect($redirectAction);
+            }
+
+            try {
+                $manager = $migration->getManager();
+                $result  = $manager->migrateUp();
+
+                if (count($result)) {
+                    $this->Flash->success(__(implode('<br />', $result)));
+                    return $this->redirect($redirectAction);
+                }
+
+                $this->Flash->success(__d('extensions', 'Something went wrong. try later'));
+                return $this->redirect($redirectAction);
+            } catch (\PDOException $e) {
+                $this->Flash->error(__d('extensions', $e->getMessage()));
+                return $this->redirect($redirectAction);
+            }
+        }
+
+        $this->Flash->error(__d('extensions', 'Not found «{0}» plugin', $plugin));
+        return $this->redirect($redirectAction);
     }
 
     /**
@@ -112,24 +165,5 @@ class PluginsController extends AppController
     public function toggle($id, $status)
     {
         $this->App->toggleField($this->Extensions, $id, $status);
-    }
-
-    public function migrate($plugin = null)
-    {
-        $slug = Str::low($plugin);
-        /** @var Extension|null $plugin */
-        $plugin = $this->Extensions->findBySlug($slug)->first();
-
-        if ($plugin !== null && Plugin::loaded($plugin->name)) {
-            $pluginDomainName = sprintf('<strong>%s</strong>', __d($plugin->slug, $plugin->name));
-            $migrations = Migration::getData($plugin->name);
-            if (count($migrations) <= 0) {
-                $this->Flash->error(__d('extensions', 'Not found migration for «{0}»', $pluginDomainName));
-                return $this->redirect(['action' => 'index']);
-            }
-
-            $manager = Migration::getManager($plugin->name);
-            dump($manager->migrateUp());
-        }
     }
 }

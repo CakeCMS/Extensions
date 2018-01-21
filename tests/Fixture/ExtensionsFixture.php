@@ -93,6 +93,32 @@ class ExtensionsFixture extends TestFixture
                     'param-1' => 'val-1',
                     'param-2' => 'val-2'
                 ])
+            ],
+            [
+                'id'       => 4,
+                'name'     => 'Tester',
+                'slug'     => 'tester',
+                'type'     => 'plugin',
+                'ordering' => 10,
+                'core'     => 1,
+                'status'   => 1,
+                'params'   => json_encode([
+                    'param-1' => 'val-1',
+                    'param-2' => 'val-2'
+                ])
+            ],
+            [
+                'id'       => 5,
+                'name'     => 'Clean',
+                'slug'     => 'clean',
+                'type'     => 'plugin',
+                'ordering' => 10,
+                'core'     => 1,
+                'status'   => 1,
+                'params'   => json_encode([
+                    'param-1' => 'val-1',
+                    'param-2' => 'val-2'
+                ])
             ]
         ];
 
