@@ -129,7 +129,7 @@ class Manager
      */
     public function getMigrations()
     {
-        if (count($this->_migrations) <= 0) {
+        if (count($this->_migrations) <= 0 && $this->_config !== null) {
             $versions = [];
             $paths = $this->_config->getMigrationPaths();
             foreach ($paths as $path) {

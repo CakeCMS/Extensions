@@ -41,6 +41,33 @@ class InitialExtensions extends AbstractMigration
      */
     public function up()
     {
+        $this->table('phinxlog')
+            ->addColumn('version', 'integer', [
+                'limit'  => 11,
+                'null'   => false,
+                'signed' => false
+            ])
+            ->addColumn('migration_name', 'string', [
+                'limit'   => 100,
+                'default' => null,
+                'null'    => true
+            ])
+            ->addColumn('start_time', 'datetime', [
+                'limit'   => null,
+                'null'    => true,
+                'default' => 'CURRENT_TIMESTAMP'
+            ])
+            ->addColumn('end_time', 'datetime', [
+                'limit'   => null,
+                'null'    => true,
+                'default' => 'CURRENT_TIMESTAMP'
+            ])
+            ->addColumn('breakpoint', 'boolean', [
+                'limit'   => null,
+                'default' => false,
+                'null'    => false
+            ]);
+
         $this->table('extensions')
             ->addColumn('id', 'integer', [
                 'limit'         => 11,
@@ -88,6 +115,8 @@ class InitialExtensions extends AbstractMigration
                 'null'    => true
             ])
             ->create();
+
+        // TODO: Write default loaded plugins.
     }
 
     /**
@@ -97,6 +126,7 @@ class InitialExtensions extends AbstractMigration
      */
     public function down()
     {
+        $this->dropTable('phinxlog');
         $this->dropTable('extensions');
     }
 }

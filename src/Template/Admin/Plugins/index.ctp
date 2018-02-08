@@ -16,6 +16,7 @@
  */
 
 use Core\Plugin;
+use JBZoo\Utils\Str;
 use Core\Toolbar\ToolbarHelper;
 use Extensions\Migration\Manager as MigrateManager;
 
@@ -44,7 +45,7 @@ $this->Assets->toggleField();
         $migrationLink = null;
         $migrate = new MigrateManager($plugin->name);
 
-        /*if ($migrate->hasMigration()) {
+        if ($migrate->hasMigration()) {
             $migrationLink = $this->Html->link(null, [
                 'controller' => 'plugins',
                 'action'     => 'migrate',
@@ -54,7 +55,7 @@ $this->Assets->toggleField();
                 'class'   => 'btn btn-floating pulse',
                 'tooltip' => __d('extensions', 'Plugin has new migrations')
             ]);
-        }*/
+        }
 
         $rows[] = [
             [$this->Form->processCheck('user', $plugin->id), ['class' => 'center ck-hide-label']],
