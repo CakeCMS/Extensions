@@ -50,9 +50,9 @@ class Migration
     /**
      * Get data for migration.
      *
-     * @return array
+     * @return  array
      *
-     * @throws \Cake\Core\Exception\MissingPluginException
+     * @throws  \Cake\Core\Exception\MissingPluginException
      */
     public function getData()
     {
@@ -81,10 +81,10 @@ class Migration
     /**
      * Get migration manager.
      *
-     * @return Manager
+     * @return  Manager
      *
-     * @throws \InvalidArgumentException
-     * @throws \Cake\Core\Exception\MissingPluginException
+     * @throws  \InvalidArgumentException
+     * @throws  \Cake\Core\Exception\MissingPluginException
      */
     public function getManager()
     {
@@ -94,9 +94,9 @@ class Migration
     /**
      * Get plugin migration path.
      *
-     * @return string
+     * @return  string
      *
-     * @throws \Cake\Core\Exception\MissingPluginException
+     * @throws  \Cake\Core\Exception\MissingPluginException
      */
     public function getPath()
     {

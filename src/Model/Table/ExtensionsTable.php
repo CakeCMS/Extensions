@@ -24,10 +24,10 @@ use Cake\Datasource\EntityInterface;
 /**
  * Class ExtensionsTable
  *
- * @package Extensions\Model\Table
- * @method Query findBySlug($alias)
- * @method filterParams(array $query)
- * @method Extension save(EntityInterface $entity, $options = [])
+ * @package     Extensions\Model\Table
+ * @method      Query findBySlug($alias)
+ * @method      filterParams(array $query)
+ * @method      Extension save(EntityInterface $entity, $options = [])
  */
 class ExtensionsTable extends Table
 {
@@ -35,9 +35,9 @@ class ExtensionsTable extends Table
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config
-     * @return void
-     * @throws \RuntimeException
+     * @param   array $config
+     * @return  void
+     * @throws  \RuntimeException
      */
     public function initialize(array $config)
     {
@@ -52,8 +52,8 @@ class ExtensionsTable extends Table
     /**
      * Returns the default validator object.
      *
-     * @param Validator $validator
-     * @return Validator
+     * @param   Validator $validator
+     * @return  Validator
      */
     public function validationDefault(Validator $validator)
     {

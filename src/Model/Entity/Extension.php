@@ -22,11 +22,11 @@ use Core\ORM\Entity\Entity;
 /**
  * Class Extension
  *
- * @package Extensions\Model\Table
- * @property string $name
- * @property string $slug
- * @property bool $core
- * @property bool $status
+ * @package     Extensions\Model\Table
+ * @property    string $name
+ * @property    string $slug
+ * @property    bool $core
+ * @property    bool $status
  */
 class Extension extends Entity
 {
@@ -34,8 +34,8 @@ class Extension extends Entity
     /**
      * Get manifest data by key.
      *
-     * @param string $key
-     * @return \JBZoo\Data\Data
+     * @param   string $key
+     * @return  \JBZoo\Data\Data
      */
     public function getManifestData($key = 'meta')
     {
@@ -45,7 +45,7 @@ class Extension extends Entity
     /**
      * Get manifest meta data.
      *
-     * @return \JBZoo\Data\Data
+     * @return  \JBZoo\Data\Data
      */
     public function getMeta()
     {
@@ -55,7 +55,7 @@ class Extension extends Entity
     /**
      * Camilize plugin name.
      *
-     * @return string
+     * @return  string
      */
     public function getName()
     {

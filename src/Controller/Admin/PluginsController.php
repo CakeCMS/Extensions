@@ -30,9 +30,9 @@ use Cake\ORM\Exception\RolledbackTransactionException;
 /**
  * Class PluginsController
  *
- * @package Extensions\Controller\Admin
- * @property ExtensionComponent $Extension
- * @property ExtensionsTable $Extensions
+ * @package     Extensions\Controller\Admin
+ * @property    ExtensionComponent $Extension
+ * @property    ExtensionsTable $Extensions
  */
 class PluginsController extends AppController
 {
@@ -40,13 +40,13 @@ class PluginsController extends AppController
     /**
      * Config save/update action.
      *
-     * @param null|string $alias
-     * @return \Cake\Http\Response|null
+     * @param   null|string $alias
+     * @return  \Cake\Http\Response|null
      *
-     * @throws MissingViewException
-     * @throws MissingPluginException
-     * @throws \InvalidArgumentException
-     * @throws RolledbackTransactionException
+     * @throws  MissingViewException
+     * @throws  MissingPluginException
+     * @throws  \InvalidArgumentException
+     * @throws  RolledbackTransactionException
      */
     public function config($alias = null)
     {
@@ -79,9 +79,9 @@ class PluginsController extends AppController
     /**
      * Index action.
      *
-     * @return void
+     * @return  void
      *
-     * @throws \RuntimeException
+     * @throws  \RuntimeException
      */
     public function index()
     {
@@ -95,11 +95,11 @@ class PluginsController extends AppController
     /**
      * Initialization hook method.
      *
-     * @return void
+     * @return  void
      *
-     * @throws MissingModelException
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
+     * @throws  MissingModelException
+     * @throws  \InvalidArgumentException
+     * @throws  \UnexpectedValueException
      */
     public function initialize()
     {
@@ -111,11 +111,11 @@ class PluginsController extends AppController
     /**
      * Migrate plugin action.
      *
-     * @param string|null $pluginName
-     * @return \Cake\Http\Response|null
+     * @param   string|null $pluginName
+     * @return  \Cake\Http\Response|null
      *
-     * @throws \InvalidArgumentException
-     * @throws \Cake\Core\Exception\MissingPluginException
+     * @throws  \InvalidArgumentException
+     * @throws  \Cake\Core\Exception\MissingPluginException
      */
     public function migrate($pluginName = null)
     {
@@ -158,10 +158,10 @@ class PluginsController extends AppController
     /**
      * Toggle action.
      *
-     * @param int $id
-     * @param $status
+     * @param   int $id
+     * @param   $status
      *
-     * @return void
+     * @return  void
      */
     public function toggle($id, $status)
     {

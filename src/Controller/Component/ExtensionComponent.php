@@ -39,8 +39,8 @@ class ExtensionComponent extends AppComponent
     /**
      * Get current plugin entity.
      *
-     * @param string $plugin
-     * @return \Cake\Datasource\EntityInterface|\Cake\ORM\Entity|mixed
+     * @param   string $plugin
+     * @return  \Cake\Datasource\EntityInterface|\Cake\ORM\Entity|mixed
      */
     public function getEntity($plugin)
     {

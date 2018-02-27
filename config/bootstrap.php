@@ -16,3 +16,7 @@
 if (!defined('CMS_TABLE_EXTENSIONS')) {
     define('CMS_TABLE_EXTENSIONS', 'extensions');
 }
+
+if (!defined('EXT_TYPE_PLUGIN')) {
+    define('EXT_TYPE_PLUGIN', 'plugin');
+}

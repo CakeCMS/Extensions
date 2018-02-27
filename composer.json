@@ -22,6 +22,7 @@
         "cake-cms/test"            : "@dev",
         "jbzoo/phpunit"            : "~2.1",
         "cake-cms/backend"         : "~1.1",
+        "cake-cms/community"       : "@dev",
         "cakephp/bake"             : "~1.1",
         "satooshi/php-coveralls"   : "^1.0.2",
         "cakephp/plugin-installer" : "^0.0.15",
@@ -35,7 +36,8 @@
     "autoload-dev" : {
         "psr-4" : {
             "Extensions\\Test\\" : "./tests",
-            "Test\\App\\"        : "./tests/App/src"
+            "Test\\App\\"        : "./tests/App/src",
+            "Community\\"        : "./vendor/cake-cms/community/src"
         }
     },
     "scripts"      : {

@@ -92,10 +92,10 @@ class Manager
     /**
      * Manager constructor.
      *
-     * @param string $plugin
+     * @param   string $plugin
      *
-     * @throws MissingPluginException
-     * @throws \InvalidArgumentException
+     * @throws  MissingPluginException
+     * @throws  \InvalidArgumentException
      */
     public function __construct($plugin)
     {
@@ -123,9 +123,9 @@ class Manager
     /**
      * Get plugin migrations.
      *
-     * @return array
+     * @return  array
      *
-     * @throws \InvalidArgumentException
+     * @throws  \InvalidArgumentException
      */
     public function getMigrations()
     {
@@ -188,9 +188,9 @@ class Manager
     /**
      * Check need plugin new migration.
      *
-     * @return bool
+     * @return  bool
      *
-     * @throws \InvalidArgumentException
+     * @throws  \InvalidArgumentException
      */
     public function hasMigration()
     {
@@ -209,8 +209,8 @@ class Manager
     /**
      * Checks if the migration with version number $version as already been mark migrated
      *
-     * @param int|string $version Version number of the migration to check
-     * @return bool
+     * @param   int|string $version Version number of the migration to check
+     * @return  bool
      */
     public function isMigrated($version)
     {
@@ -220,9 +220,9 @@ class Manager
     /**
      * Migrate up action.
      *
-     * @return array
+     * @return  array
      *
-     * @throws \InvalidArgumentException
+     * @throws  \InvalidArgumentException
      *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
@@ -267,7 +267,7 @@ class Manager
     /**
      * Setup Phinx configuration.
      *
-     * @return array
+     * @return  array
      */
     protected function _configuration()
     {
@@ -292,8 +292,8 @@ class Manager
     /**
      * Execute migration.
      *
-     * @param AbstractMigration $migration
-     * @return bool|null|string
+     * @param   AbstractMigration $migration
+     * @return  bool|null|string
      */
     protected function _execute(AbstractMigration $migration)
     {
@@ -341,10 +341,10 @@ class Manager
     /**
      * Get adapter name from application driver.
      *
-     * @param string $driver
-     * @return string
+     * @param   string $driver
+     * @return  string
      *
-     * @throws \InvalidArgumentException
+     * @throws  \InvalidArgumentException
      */
     protected function _getAdapterName($driver)
     {
@@ -368,8 +368,8 @@ class Manager
     /**
      * Get database adapter.
      *
-     * @param array $options
-     * @return \Phinx\Db\Adapter\AdapterInterface
+     * @param   array $options
+     * @return  \Phinx\Db\Adapter\AdapterInterface
      */
     protected function _setAdapter(array $options)
     {

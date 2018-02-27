@@ -33,8 +33,8 @@ class ExtensionHelper extends AppHelper
     /**
      * Render plugin params.
      *
-     * @return string
-     * @throws MissingElementException
+     * @return  string
+     * @throws  MissingElementException
      */
     public function renderPluginParams()
     {
