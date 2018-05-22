@@ -58,7 +58,22 @@ ConnectionManager::setConfig('test', [
 Email::setConfig(Configure::consume('Email'));
 Email::setConfigTransport(Configure::consume('EmailTransport'));
 
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
+
+use Cake\Chronos\Chronos;
+use Cake\Chronos\Date;
+use Cake\Chronos\MutableDate;
+use Cake\Chronos\MutableDateTime;
+
+Chronos::setTestNow(Chronos::now());
+MutableDateTime::setTestNow(MutableDateTime::now());
+Date::setTestNow(Date::now());
+MutableDate::setTestNow(MutableDate::now());
+
+ini_set('session.gc_divisor', '1');
+loadPHPUnitAliases();
+// Fixate sessionid early on, as php7.2+
+// does not allow the sessionid to be set after stdout
+// has been written to.
+session_id('cli');
 
 Cms::getInstance();

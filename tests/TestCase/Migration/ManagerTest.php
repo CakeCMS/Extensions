@@ -91,6 +91,15 @@ class ManagerTest extends TestCase
         $migrate->getMigrations();
     }
 
+    public function testHasMigration()
+    {
+        $migrate = new Migration('Tester');
+        self::assertTrue($migrate->hasMigration());
+
+        $migrate = new Migration('Clean');
+        self::assertFalse($migrate->hasMigration());
+    }
+
     public function testMigrateUpSuccess()
     {
         $migrate = new Migration('Tester');
@@ -98,6 +107,9 @@ class ManagerTest extends TestCase
         self::assertTrue(is_array($output));
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     */
     public function testMigrationUp()
     {
         $migrate = new Migration('Tester');
@@ -109,14 +121,5 @@ class ManagerTest extends TestCase
                 sprintf('<strong>%s</strong>', 'Tester')
             )
         ], $migrate->migrateUp());
-    }
-
-    public function testHasMigration()
-    {
-        $migrate = new Migration('Tester');
-        self::assertTrue($migrate->hasMigration());
-
-        $migrate = new Migration('Clean');
-        self::assertFalse($migrate->hasMigration());
     }
 }

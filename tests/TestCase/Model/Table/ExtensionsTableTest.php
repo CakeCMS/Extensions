@@ -28,8 +28,9 @@ class ExtensionsTableTest extends TestCase
 {
 
     public $fixtures = ['plugin.extensions.extensions'];
-    protected $_plugin = 'Core';
+
     protected $_corePlugin = 'Extensions';
+    protected $_plugin = 'Core';
 
     /**
      * @var ExtensionsTable
@@ -50,6 +51,9 @@ class ExtensionsTableTest extends TestCase
         self::assertSame('Extensions\Model\Entity\Extension', $this->Table->getEntityClass());
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     */
     public function testValidationName()
     {
         $entity = $this->Table->newEntity(['name' => '']);
@@ -61,6 +65,9 @@ class ExtensionsTableTest extends TestCase
         ], $entity->getError('name'));
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     */
     public function testValidationSlug()
     {
         $data = [

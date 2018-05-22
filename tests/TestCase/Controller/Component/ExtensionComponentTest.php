@@ -30,13 +30,13 @@ class ExtensionComponentTest extends TestCase
 {
 
     public $fixtures = ['plugin.extensions.extensions'];
-    protected $_plugin = 'Core';
-    protected $_corePlugin = 'Extensions';
-
     /**
      * @var ExtensionComponent
      */
     protected $_component;
+
+    protected $_corePlugin = 'Extensions';
+    protected $_plugin = 'Core';
 
     public function setUp()
     {
